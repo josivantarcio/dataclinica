@@ -1,0 +1,66 @@
+<div class="container">
+  <div class="header">
+    <h2>Consultas</h2>
+    <button class="btn btn-primary" (click)="onNew()">
+      <i class="fas fa-plus"></i> Nova Consulta
+    </button>
+  </div>
+
+  <div class="alert alert-danger" *ngIf="error">
+    {{ error }}
+  </div>
+
+  <div class="loading" *ngIf="loading">
+    <i class="fas fa-spinner fa-spin"></i> Carregando...
+  </div>
+
+  <div class="table-responsive" *ngIf="!loading">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Data/Hora</th>
+          <th>Médico</th>
+          <th>Especialidade</th>
+          <th>Paciente</th>
+          <th>Status</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let consulta of consultas">
+          <td>{{ formatarDataHora(consulta.dataHora) }}</td>
+          <td>{{ consulta.medico?.nome }}</td>
+          <td>{{ consulta.medico?.especialidade }}</td>
+          <td>{{ consulta.paciente?.nome }}</td>
+          <td>
+            <span class="badge" [ngClass]="getStatusClass(consulta.status)">
+              {{ consulta.status }}
+            </span>
+          </td>
+          <td>
+            <div class="btn-group">
+              <button class="btn btn-sm btn-info" (click)="onEdit(consulta.id!)" *ngIf="consulta.status !== 'REALIZADA'">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button class="btn btn-sm btn-danger" (click)="onDelete(consulta.id!)" *ngIf="consulta.status !== 'REALIZADA'">
+                <i class="fas fa-trash"></i>
+              </button>
+              <button class="btn btn-sm btn-warning" (click)="onCancelar(consulta.id!)" *ngIf="consulta.status === 'AGENDADA' || consulta.status === 'CONFIRMADA'">
+                <i class="fas fa-ban"></i>
+              </button>
+              <button class="btn btn-sm btn-info" (click)="onConfirmar(consulta.id!)" *ngIf="consulta.status === 'AGENDADA'">
+                <i class="fas fa-check"></i>
+              </button>
+              <button class="btn btn-sm btn-success" (click)="onRealizar(consulta.id!)" *ngIf="consulta.status === 'CONFIRMADA'">
+                <i class="fas fa-check-double"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+        <tr *ngIf="consultas.length === 0">
+          <td colspan="6" class="text-center">Nenhuma consulta encontrada</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div> 

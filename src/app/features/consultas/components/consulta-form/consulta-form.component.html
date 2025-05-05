@@ -1,0 +1,98 @@
+<div class="container">
+  <div class="header">
+    <h2>{{ isEditMode ? 'Editar Consulta' : 'Nova Consulta' }}</h2>
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger">
+    {{ error }}
+  </div>
+
+  <div *ngIf="loading" class="loading">
+    Carregando...
+  </div>
+
+  <form [formGroup]="consultaForm" (ngSubmit)="onSubmit()" *ngIf="!loading">
+    <div class="form-group">
+      <label for="medicoId">Médico</label>
+      <select
+        id="medicoId"
+        formControlName="medicoId"
+        class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f['medicoId'].errors }"
+      >
+        <option value="">Selecione um médico</option>
+        <option *ngFor="let medico of medicos" [value]="medico.id">
+          {{ medico.nome }} - {{ medico.especialidade }}
+        </option>
+      </select>
+      <div *ngIf="submitted && f['medicoId'].errors" class="invalid-feedback">
+        <div *ngIf="f['medicoId'].errors['required']">Médico é obrigatório</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="pacienteId">Paciente</label>
+      <select
+        id="pacienteId"
+        formControlName="pacienteId"
+        class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f['pacienteId'].errors }"
+      >
+        <option value="">Selecione um paciente</option>
+        <option *ngFor="let paciente of pacientes" [value]="paciente.id">
+          {{ paciente.nome }} - {{ paciente.cpf }}
+        </option>
+      </select>
+      <div *ngIf="submitted && f['pacienteId'].errors" class="invalid-feedback">
+        <div *ngIf="f['pacienteId'].errors['required']">Paciente é obrigatório</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="dataHora">Data e Hora</label>
+      <input
+        type="datetime-local"
+        id="dataHora"
+        formControlName="dataHora"
+        class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f['dataHora'].errors }"
+      />
+      <div *ngIf="submitted && f['dataHora'].errors" class="invalid-feedback">
+        <div *ngIf="f['dataHora'].errors['required']">Data e hora são obrigatórios</div>
+        <div *ngIf="f['dataHora'].errors['pastDate']">A data deve ser futura</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="observacoes">Observações</label>
+      <textarea
+        id="observacoes"
+        formControlName="observacoes"
+        class="form-control"
+        rows="3"
+      ></textarea>
+    </div>
+
+    <div class="form-group">
+      <label for="status">Status</label>
+      <select
+        id="status"
+        formControlName="status"
+        class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f['status'].errors }"
+      >
+        <option value="AGENDADA">Agendada</option>
+        <option value="CONFIRMADA">Confirmada</option>
+        <option value="CANCELADA">Cancelada</option>
+        <option value="REALIZADA">Realizada</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary" [disabled]="loading">
+        {{ isEditMode ? 'Atualizar' : 'Criar' }}
+      </button>
+      <button type="button" class="btn btn-link" (click)="onCancel()">Cancelar</button>
+    </div>
+  </form>
+</div> 
