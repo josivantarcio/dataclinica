@@ -1,0 +1,108 @@
+<div class="container">
+  <div class="header">
+    <h2>{{ isEditMode ? 'Editar Médico' : 'Novo Médico' }}</h2>
+  </div>
+
+  <div class="alert alert-danger" *ngIf="error">
+    {{ error }}
+  </div>
+
+  <div class="loading" *ngIf="loading">
+    <i class="fas fa-spinner fa-spin"></i> Carregando...
+  </div>
+
+  <form [formGroup]="medicoForm" (ngSubmit)="onSubmit()" *ngIf="!loading">
+    <div class="form-group">
+      <label for="nome">Nome</label>
+      <input
+        type="text"
+        id="nome"
+        formControlName="nome"
+        class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f['nome'].errors }"
+      />
+      <div *ngIf="submitted && f['nome'].errors" class="invalid-feedback">
+        <div *ngIf="f['nome'].errors['required']">Nome é obrigatório</div>
+        <div *ngIf="f['nome'].errors['minlength']">Nome deve ter pelo menos 3 caracteres</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input
+        type="email"
+        id="email"
+        formControlName="email"
+        class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f['email'].errors }"
+      />
+      <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
+        <div *ngIf="f['email'].errors['required']">Email é obrigatório</div>
+        <div *ngIf="f['email'].errors['email']">Email inválido</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="crm">CRM</label>
+      <input
+        type="text"
+        id="crm"
+        formControlName="crm"
+        class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f['crm'].errors }"
+      />
+      <div *ngIf="submitted && f['crm'].errors" class="invalid-feedback">
+        <div *ngIf="f['crm'].errors['required']">CRM é obrigatório</div>
+        <div *ngIf="f['crm'].errors['pattern']">CRM deve conter 6 dígitos</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="especialidade">Especialidade</label>
+      <input
+        type="text"
+        id="especialidade"
+        formControlName="especialidade"
+        class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f['especialidade'].errors }"
+      />
+      <div *ngIf="submitted && f['especialidade'].errors" class="invalid-feedback">
+        <div *ngIf="f['especialidade'].errors['required']">Especialidade é obrigatória</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="telefone">Telefone</label>
+      <input
+        type="text"
+        id="telefone"
+        formControlName="telefone"
+        class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f['telefone'].errors }"
+      />
+      <div *ngIf="submitted && f['telefone'].errors" class="invalid-feedback">
+        <div *ngIf="f['telefone'].errors['required']">Telefone é obrigatório</div>
+        <div *ngIf="f['telefone'].errors['pattern']">Telefone inválido</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="custom-control custom-switch">
+        <input
+          type="checkbox"
+          id="ativo"
+          formControlName="ativo"
+          class="custom-control-input"
+        />
+        <label class="custom-control-label" for="ativo">Ativo</label>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" class="btn btn-secondary" (click)="onCancel()">Cancelar</button>
+      <button type="submit" class="btn btn-primary" [disabled]="loading">
+        {{ isEditMode ? 'Atualizar' : 'Criar' }}
+      </button>
+    </div>
+  </form>
+</div> 

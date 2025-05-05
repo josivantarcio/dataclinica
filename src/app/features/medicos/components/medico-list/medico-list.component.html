@@ -1,0 +1,57 @@
+<div class="container">
+  <div class="header">
+    <h2>Médicos</h2>
+    <button class="btn btn-primary" (click)="onNew()">
+      <i class="fas fa-plus"></i> Novo Médico
+    </button>
+  </div>
+
+  <div class="alert alert-danger" *ngIf="error">
+    {{ error }}
+  </div>
+
+  <div class="loading" *ngIf="loading">
+    <i class="fas fa-spinner fa-spin"></i> Carregando...
+  </div>
+
+  <div class="table-responsive" *ngIf="!loading">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>CRM</th>
+          <th>Especialidade</th>
+          <th>Email</th>
+          <th>Telefone</th>
+          <th>Status</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let medico of medicos">
+          <td>{{ medico.nome }}</td>
+          <td>{{ medico.crm }}</td>
+          <td>{{ medico.especialidade }}</td>
+          <td>{{ medico.email }}</td>
+          <td>{{ medico.telefone }}</td>
+          <td>
+            <span class="badge" [ngClass]="medico.ativo ? 'badge-success' : 'badge-danger'">
+              {{ medico.ativo ? 'Ativo' : 'Inativo' }}
+            </span>
+          </td>
+          <td>
+            <button class="btn btn-sm btn-info" (click)="onEdit(medico.id!)">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button class="btn btn-sm btn-danger" (click)="onDelete(medico.id!)">
+              <i class="fas fa-trash"></i>
+            </button>
+          </td>
+        </tr>
+        <tr *ngIf="medicos.length === 0">
+          <td colspan="7" class="text-center">Nenhum médico encontrado</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div> 
