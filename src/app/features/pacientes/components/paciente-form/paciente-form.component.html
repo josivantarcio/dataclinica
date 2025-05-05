@@ -1,0 +1,122 @@
+<div class="container">
+  <div class="header">
+    <h2>{{ isEditMode ? 'Editar Paciente' : 'Novo Paciente' }}</h2>
+  </div>
+
+  <div class="alert alert-danger" *ngIf="error">
+    {{ error }}
+  </div>
+
+  <div class="loading" *ngIf="loading">
+    <i class="fas fa-spinner fa-spin"></i> Carregando...
+  </div>
+
+  <form [formGroup]="pacienteForm" (ngSubmit)="onSubmit()" *ngIf="!loading">
+    <div class="form-group">
+      <label for="nome">Nome</label>
+      <input
+        type="text"
+        id="nome"
+        formControlName="nome"
+        class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f['nome'].errors }"
+      />
+      <div *ngIf="submitted && f['nome'].errors" class="invalid-feedback">
+        <div *ngIf="f['nome'].errors['required']">Nome é obrigatório</div>
+        <div *ngIf="f['nome'].errors['minlength']">Nome deve ter pelo menos 3 caracteres</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input
+        type="email"
+        id="email"
+        formControlName="email"
+        class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f['email'].errors }"
+      />
+      <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
+        <div *ngIf="f['email'].errors['required']">Email é obrigatório</div>
+        <div *ngIf="f['email'].errors['email']">Email inválido</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="cpf">CPF</label>
+      <input
+        type="text"
+        id="cpf"
+        formControlName="cpf"
+        class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f['cpf'].errors }"
+      />
+      <div *ngIf="submitted && f['cpf'].errors" class="invalid-feedback">
+        <div *ngIf="f['cpf'].errors['required']">CPF é obrigatório</div>
+        <div *ngIf="f['cpf'].errors['pattern']">CPF deve conter 11 dígitos</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="dataNascimento">Data de Nascimento</label>
+      <input
+        type="date"
+        id="dataNascimento"
+        formControlName="dataNascimento"
+        class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f['dataNascimento'].errors }"
+      />
+      <div *ngIf="submitted && f['dataNascimento'].errors" class="invalid-feedback">
+        <div *ngIf="f['dataNascimento'].errors['required']">Data de nascimento é obrigatória</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="telefone">Telefone</label>
+      <input
+        type="text"
+        id="telefone"
+        formControlName="telefone"
+        class="form-control"
+        [ngClass]="{ 'is-invalid': submitted && f['telefone'].errors }"
+      />
+      <div *ngIf="submitted && f['telefone'].errors" class="invalid-feedback">
+        <div *ngIf="f['telefone'].errors['required']">Telefone é obrigatório</div>
+        <div *ngIf="f['telefone'].errors['pattern']">Telefone inválido</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="endereco">Endereço</label>
+      <textarea
+        id="endereco"
+        formControlName="endereco"
+        class="form-control"
+        rows="3"
+        [ngClass]="{ 'is-invalid': submitted && f['endereco'].errors }"
+      ></textarea>
+      <div *ngIf="submitted && f['endereco'].errors" class="invalid-feedback">
+        <div *ngIf="f['endereco'].errors['required']">Endereço é obrigatório</div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <div class="custom-control custom-switch">
+        <input
+          type="checkbox"
+          id="ativo"
+          formControlName="ativo"
+          class="custom-control-input"
+        />
+        <label class="custom-control-label" for="ativo">Ativo</label>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" class="btn btn-secondary" (click)="onCancel()">Cancelar</button>
+      <button type="submit" class="btn btn-primary" [disabled]="loading">
+        {{ isEditMode ? 'Atualizar' : 'Criar' }}
+      </button>
+    </div>
+  </form>
+</div> 

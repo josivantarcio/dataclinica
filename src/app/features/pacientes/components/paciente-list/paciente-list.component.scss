@@ -1,0 +1,40 @@
+.container {
+  padding: 20px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+
+  h2 {
+    margin: 0;
+  }
+}
+
+.loading {
+  text-align: center;
+  padding: 20px;
+  font-size: 1.2em;
+  color: #666;
+}
+
+.table {
+  th {
+    background-color: #f8f9fa;
+  }
+
+  .badge {
+    padding: 5px 10px;
+    font-size: 0.9em;
+  }
+
+  .btn {
+    margin: 0 2px;
+  }
+}
+
+.alert {
+  margin-bottom: 20px;
+} 
