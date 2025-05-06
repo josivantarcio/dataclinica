@@ -1,6 +1,5 @@
 package com.dataclin.dto.consulta;
 
-import com.dataclin.model.Consulta;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;
 
